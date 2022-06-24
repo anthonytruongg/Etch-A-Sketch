@@ -1,66 +1,78 @@
 let body = document.body
 
-// GRID -----------------------------------------------------------
-const columnContainer = document.createElement('div')
-columnContainer.setAttribute('class', 'columnContainer')
+const container = document.createElement('div')
+container.setAttribute('class', 'container')
+// BUTTON ---------------------------------------------------------
+const button = document.createElement('button')
+button.setAttribute('class', 'reset')
+button.addEventListener("click", resize)
+button.style.padding = "20px"
+button.textContent = "Resize Sketch Pad"
+button.style.fontSize = "32px"
 
+function resize () {
+    let rowNum = prompt("ENTER AMOUNT OF ROWS")
+    if(rowNum > 100) {
+        alert("Cannot go above 100")
+        return 17
+    } 
+    let columnNum = prompt("ENTER AMOUNT OF COLUMNS")
+    if(columnNum > 100) {
+        alert("Cannot go above 100")
+        return 17
+    } 
 
-
-for (var i = 1; i < 17; i++) {
-    const columns = document.createElement('div')
-    columns.setAttribute('class', 'column')
-    // styling
-    // columns.textContent = (i)
-    // columns.style.padding = "10px"
-    // columns.style.border = "2px solid black"
-    columnContainer.append(columns)
-
-    for (var x = 1; x < 17; x++) {
-        const columnsTwo = document.createElement('div')
-        columnsTwo.setAttribute('class', i.toString())
-
-    
-       // styling
-        //columnsTwo.textContent = (i)
-        columnsTwo.style.padding = "20px"
-        columnsTwo.style.border = "2px solid white"
-        columnsTwo.style.backgroundColor = 'black'
-
-        columnsTwo.addEventListener('mouseover', e => {
-            columnsTwo.style.backgroundColor = 'pink'
-        })
-
-        columnsTwo.addEventListener('mouseleave', e => {
-            setTimeout(() => {
-                columnsTwo.style.backgroundColor = 'black'
-
-            }, 1000);
-        })
-
-
-        columns.append(columnsTwo)
-
-    
-    }
+    replaceGrid(rowNum, columnNum)
 }
-// ----------------------------------------------------------------
 
+container.append(button)
 
+// GRID -----------------------------------------------------------
+function createGrid (rowNum, columnNum) {
+    const columnContainer = document.createElement('div')
+    columnContainer.setAttribute('class', 'columnContainer')
 
-// addGlobalEventListener("mouseover", "", e => {
-//     columnsTwo.style.backgroundColor = "green"
-// })
+    for (var i = 1; i < rowNum; i++) {
+        const columns = document.createElement('div')
+        columns.setAttribute('class', 'column')
+        // styling
+        // columns.textContent = (i)
+        // columns.style.padding = "10px"
+        // columns.style.border = "2px solid black"
+        columnContainer.append(columns)
+    
+        for (var x = 1; x < columnNum; x++) {
+            const columnsTwo = document.createElement('div')
+            columnsTwo.setAttribute('class', i)
+    
+        
+            // styling
+            //columnsTwo.textContent = (i)
+            columnsTwo.style.padding = "20px"
+            columnsTwo.style.border = "2px solid white"
+            columnsTwo.style.backgroundColor = 'black'
+    
+            // event listeners
+            columnsTwo.addEventListener('mouseover', e => {
+                columnsTwo.style.backgroundColor = 'pink'
+            })
+            columnsTwo.addEventListener('mouseleave', e => {
+                setTimeout(() => {
+                    columnsTwo.style.backgroundColor = 'black'
+    
+                }, 250);
+            })
+            columns.append(columnsTwo)
+        }
+    }
+    
+    body.append(container, columnContainer)
 
-// function addGlobalEventListener(type, selector, callback) {
-//     document.addEventListener(type, e => {
-//         if(e.target.matches(selector)) callback(e)
-//     })
-// }
-
-
-
-// ----------------------------------------------------------------
-
-body.append(columnContainer)
-
-
+}
+// GRID -----------------------------------------------------------
+function replaceGrid (rowNum, columnNum) {
+    createGrid(rowNum,columnNum)
+    var elem = document.querySelector('.columnContainer')
+    elem.parentNode.removeChild(elem)
+}
+createGrid(17,17)
