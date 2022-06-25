@@ -2,13 +2,14 @@ let body = document.body
 
 const container = document.createElement('div')
 container.setAttribute('class', 'container')
-// BUTTON ---------------------------------------------------------
+// ---------------------------------------------------------
+// Button - Resize
 const button = document.createElement('button')
 button.setAttribute('class', 'reset')
 button.addEventListener("click", resize)
-button.style.padding = "20px"
+button.style.padding = "10px"
 button.textContent = "Resize Sketch Pad"
-button.style.fontSize = "32px"
+button.style.fontSize = "15px"
 
 function resize () {
     let rowNum = prompt("ENTER AMOUNT OF ROWS")
@@ -26,53 +27,56 @@ function resize () {
 }
 
 container.append(button)
+// ---------------------------------------------------------
 
-// GRID -----------------------------------------------------------
+// ---------------------------------------------------------
+// Grid Creation
+const parentContainer = document.createElement('div')
+parentContainer.setAttribute('class', 'parentContainer')
+
+
 function createGrid (rowNum, columnNum) {
     const columnContainer = document.createElement('div')
     columnContainer.setAttribute('class', 'columnContainer')
 
-    for (var i = 1; i < rowNum; i++) {
+    for (var i = 1; i <= rowNum; i++) {
         const columns = document.createElement('div')
         columns.setAttribute('class', 'column')
         // styling
-        // columns.textContent = (i)
-        // columns.style.padding = "10px"
-        // columns.style.border = "2px solid black"
         columnContainer.append(columns)
     
-        for (var x = 1; x < columnNum; x++) {
+        for (var x = 1; x <= columnNum; x++) {
             const columnsTwo = document.createElement('div')
             columnsTwo.setAttribute('class', i)
-    
-        
             // styling
-            //columnsTwo.textContent = (i)
-            columnsTwo.style.padding = "20px"
-            columnsTwo.style.border = "2px solid white"
+            columnsTwo.style.padding = "1.5px"
+            columnsTwo.style.margin = "0"
+            columnsTwo.style.border = "2px solid black"
             columnsTwo.style.backgroundColor = 'black'
-    
             // event listeners
             columnsTwo.addEventListener('mouseover', e => {
                 columnsTwo.style.backgroundColor = 'pink'
             })
             columnsTwo.addEventListener('mouseleave', e => {
-                setTimeout(() => {
-                    columnsTwo.style.backgroundColor = 'black'
-    
-                }, 250);
+                // setTimeout(() => {
+                //     columnsTwo.style.backgroundColor = 'black'
+                // }, );
             })
             columns.append(columnsTwo)
         }
     }
-    
-    body.append(container, columnContainer)
+    parentContainer.append(columnContainer)
+    body.append(container, parentContainer)
 
 }
-// GRID -----------------------------------------------------------
+// ---------------------------------------------------------
+// Deleting old Grid and replacing with new Grid
+
 function replaceGrid (rowNum, columnNum) {
     createGrid(rowNum,columnNum)
     var elem = document.querySelector('.columnContainer')
     elem.parentNode.removeChild(elem)
 }
-createGrid(17,17)
+// ---------------------------------------------------------
+// Default grid 50x50
+createGrid(50,50)
